@@ -3,7 +3,6 @@ import { convertToBangla } from "@/utils";
 import Image from "next/image";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import OrderDetails from "./OrderDetails";
-import ReactPixel from "react-facebook-pixel";
 
 const FormOrder = ({
   setFormErrors,
@@ -82,19 +81,17 @@ const FormOrder = ({
       return;
     }
 
-    const resData = {
-      name: formData.name,
-      mobile: formData.mobile,
-      address: formData.address,
-      productId: formData.productId,
-      productName: formData.productName,
-      subtotal,
-      shipping,
-      total,
-      status: "Pending",
-    };
-
-    ReactPixel.track("Purchage", resData);
+    // const resData = {
+    //   name: formData.name,
+    //   mobile: formData.mobile,
+    //   address: formData.address,
+    //   productId: formData.productId,
+    //   productName: formData.productName,
+    //   subtotal,
+    //   shipping,
+    //   total,
+    //   status: "Pending",
+    // };
 
     setOrderSuccess(true);
     setLoading(false);
