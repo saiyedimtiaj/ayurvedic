@@ -1,6 +1,6 @@
-"use server";
-/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 import ReactPixel from "react-facebook-pixel";
-export const puchageEvent = async (data: any) => {
-  await ReactPixel.track("Purchage", data);
+
+export const purchaseEvent = (data: unknown) => {
+  ReactPixel.track("Purchase", data);
 };

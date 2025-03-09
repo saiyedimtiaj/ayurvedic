@@ -1,9 +1,10 @@
+"use client";
 import { TFormData, TProduct } from "@/types";
 import { convertToBangla } from "@/utils";
 import Image from "next/image";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import OrderDetails from "./OrderDetails";
-import { puchageEvent } from "@/services/fbPixel";
+import { purchaseEvent } from "@/services/fbPixel"; // Corrected function name
 
 const FormOrder = ({
   setFormErrors,
@@ -93,7 +94,7 @@ const FormOrder = ({
       total,
       status: "Pending",
     };
-    puchageEvent(resData);
+    purchaseEvent(resData); // Corrected function call
 
     setOrderSuccess(true);
     setLoading(false);

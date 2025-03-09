@@ -2,8 +2,12 @@
 
 import { AlertCircle, CheckCircle } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
-import FormOrder from "./FormOrder";
 import { TFormData, TProduct } from "@/types";
+import dynamic from "next/dynamic";
+
+const FormOrder = dynamic(() => import("./FormOrder"), {
+  ssr: false,
+});
 
 const OrderForm = ({
   formData,
