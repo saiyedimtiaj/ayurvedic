@@ -9,8 +9,9 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Hair Oil",
-  description: "Hair",
+  title: "AYURVEDIC",
+  description: "Hair Oil",
+  icons: "./ADIVASHI-LOGOiu-01.svg.svg",
 };
 
 export default function RootLayout({

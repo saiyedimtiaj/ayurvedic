@@ -3,7 +3,6 @@ import { convertToBangla } from "@/utils";
 import Image from "next/image";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import OrderDetails from "./OrderDetails";
-import axios from "axios";
 
 const FormOrder = ({
   setFormErrors,
@@ -82,28 +81,8 @@ const FormOrder = ({
       return;
     }
 
-    try {
-      const response = await axios.post("/api/orders", {
-        name: formData.name,
-        mobile: formData.mobile,
-        address: formData.address,
-        productId: formData.productId,
-        productName: formData.productName,
-        subtotal,
-        shipping,
-        total,
-        status: "Pending",
-      });
-
-      setFormErrors([]);
-      setOrderSuccess(true);
-      console.log("Order placed successfully:", response.data);
-    } catch (error) {
-      console.error("Error placing order:", error);
-      setFormErrors(["Failed to place the order. Please try again."]);
-    } finally {
-      setLoading(false);
-    }
+    setOrderSuccess(true);
+    setLoading(false);
   };
 
   return (

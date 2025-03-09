@@ -7,8 +7,10 @@ import "swiper/css/navigation";
 import { Autoplay, Pagination } from "swiper/modules";
 import Image from "next/image";
 import logo from "../assets/ADIVASHI-LOGOiu-01.png";
+import useFacebookPixel from "@/hooks/useFacebookPixel";
 
 export default function Hero() {
+  useFacebookPixel();
   return (
     <div className="container mx-auto md:px-5">
       <Image

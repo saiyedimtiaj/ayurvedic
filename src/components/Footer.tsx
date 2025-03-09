@@ -16,8 +16,8 @@ const Footer = () => {
         </div>
         <div className="flex items-center gap-1">
           <FaLink size={20} />
-          <Link className="text-base" href={"/privacy-policy"}>
-            Privacy Policy
+          <Link className="text-base" href={"/terms-and-condition"}>
+            Terms & Condition
           </Link>
         </div>
       </div>

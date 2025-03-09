@@ -37,6 +37,7 @@ const Combain = () => {
     productId: products[0].id,
     productName: products[0].name,
   });
+
   return (
     <div>
       <Products products={products} setFormData={setFormData} />
