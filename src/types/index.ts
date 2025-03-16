@@ -3,8 +3,10 @@ export interface TProduct {
   name: string;
   price: number;
   image: string;
-  description: string;
   isFreeDelibery: boolean;
+  isHotSales?: string;
+  offerPrice: number;
+  tag: string;
 }
 
 export type TFaqItems = {

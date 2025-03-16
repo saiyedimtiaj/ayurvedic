@@ -1,9 +1,16 @@
-import { convertToBangla } from "@/utils";
 import { CheckCircle, Loader2, ShoppingBag, Truck } from "lucide-react";
 import { SlCheck } from "react-icons/sl";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { TProduct } from "@/types";
+import { motion } from "framer-motion";
+import Confetti from "react-confetti";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 const OrderDetails = ({
   selectedProduct,
@@ -22,9 +29,10 @@ const OrderDetails = ({
   orderSuccess: boolean;
   shipping: string;
 }) => {
+  const [modalOpen, setModalOpen] = useState(false);
   return (
     <div className="flex-1 md:sticky md:top-8 md:self-start">
-      <h3 className="text-xl font-bold text-gray-800 mb-6">অর্ডার সারাংশ</h3>
+      <h3 className="text-xl font-bold text-green-800 mb-6">Your Order</h3>
 
       <div className="p-4 md:p-6 mb-6">
         <div className="flex items-center border-t-1 border-gray-400 pt-6 border-dashed mb-6">
@@ -39,22 +47,26 @@ const OrderDetails = ({
             <h4 className="font-bold text-lg">{selectedProduct.name}</h4>
             <p className="text-gray-600">
               <span className="text-sm font-extrabold mr-1">৳</span>
-              {convertToBangla(selectedProduct.price.toFixed(2))}
+              {selectedProduct.offerPrice.toFixed(2)}
             </p>
           </div>
         </div>
 
         <div className="border-t border-gray-400 border-dashed pt-4">
           <div className="flex justify-between mb-2">
-            <span className="text-lg font-semibold">সাবটোটাল : </span>
+            <span className="text-base md:text-lg font-semibold">
+              Subtotal:{" "}
+            </span>
             <span>
               <span className="text-sm font-extrabold mr-1">৳</span>
-              {convertToBangla(subtotal.toFixed(2))}
+              {subtotal.toFixed(2)}
             </span>
           </div>
 
           <div className="flex justify-between mt-8 items-center gap-3">
-            <p className="text-lg font-semibold">শিপিং : </p>
+            <span className="text-base md:text-lg font-semibold">
+              Shipping:
+            </span>
             <div className="flex justify-between items-center">
               {selectedProduct.isFreeDelibery ? (
                 <span>ফ্রি ডেলিভারি</span>
@@ -64,33 +76,33 @@ const OrderDetails = ({
                     <input
                       type="radio"
                       name="shipping"
-                      value="40"
+                      value="80"
                       checked={
-                        !selectedProduct.isFreeDelibery && shipping === "40"
+                        !selectedProduct.isFreeDelibery && shipping === "80"
                       }
                       className="ml-3 scale-125 cursor-pointer" // Reduced size
                       onChange={handleShippingChange}
                     />
-                    <span>ঢাকার ভিতরে</span>
+                    <span>চট্টগ্রাম ভিতরে</span>
                   </label>
                   <p className="text-lg ml-4">
                     <span className="text-base font-extrabold mr-1">৳</span>
-                    {convertToBangla(40)}
+                    {80}
                   </p>
 
                   <div className="flex items-center gap-1.5 mt-3 justify-end mr-2">
                     <input
                       type="radio"
                       name="shipping"
-                      value="140"
+                      value="130"
                       className="ml-3 scale-125 cursor-pointer"
                       onChange={handleShippingChange}
                     />
-                    <span className="">ঢাকার বাইরে</span>
+                    <span className="">চট্টগ্রাম বাইরে</span>
                   </div>
                   <p className="text-lg ml-4">
                     <span className="text-base font-extrabold mr-1">৳</span>
-                    {convertToBangla(140)}
+                    {130}
                   </p>
                 </div>
               )}
@@ -98,10 +110,10 @@ const OrderDetails = ({
           </div>
 
           <div className="flex justify-between font-bold text-lg mt-4 pt-4 border-t border-gray-400 border-dashed">
-            <span>মোট : </span>
+            <span>Total: </span>
             <span>
               <span className="text-lg font-extrabold mr-1">৳</span>
-              {convertToBangla(total.toFixed(2))}
+              {total.toFixed(2)}
             </span>
           </div>
         </div>
@@ -127,18 +139,35 @@ const OrderDetails = ({
           </li>
         </ul>
       </div>
-
-      <button
+      <motion.button
         type="submit"
         disabled={loading || orderSuccess}
-        className={`w-full py-4 cursor-pointer text-white font-bold rounded-lg transition duration-300 flex items-center justify-center ${
-          orderSuccess
-            ? "bg-[#008037] cursor-not-allowed opacity-80"
-            : loading
-            ? "bg-gray-400 cursor-not-allowed opacity-50"
-            : "bg-[#133196] hover:bg-[#0f2d85]"
+        onClick={() => setModalOpen(true)}
+        className={`w-full py-4 text-xl cursor-pointer text-white font-bold rounded-lg transition duration-300 flex items-center justify-center overflow-hidden relative shadow-[0_4px_10px_#DE7200] opacity-100 ${
+          orderSuccess ? "bg-green-500" : "bg-green-800"
         }`}
+        whileHover={
+          !loading && !orderSuccess
+            ? {
+                scale: 1.05,
+                transition: { duration: 0.3 },
+              }
+            : {}
+        }
       >
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-white/10 via-white/50 to-transparent opacity-0"
+          animate={{
+            opacity: [0, 1, 0],
+            x: ["-100%", "100%"],
+          }}
+          transition={{
+            repeat: Infinity,
+            duration: 2,
+            ease: "linear",
+          }}
+        />
+
         {loading ? (
           <>
             <Loader2 className="animate-spin mr-2" /> অর্ডার প্রসেসিং...
@@ -154,7 +183,31 @@ const OrderDetails = ({
             অর্ডার দিন
           </>
         )}
-      </button>
+      </motion.button>
+
+      <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+        <DialogContent>
+          {<Confetti className="w-full h-full" />}
+          <DialogHeader>
+            <DialogTitle className="text-center text-green-600">
+              অর্ডার সফল!
+            </DialogTitle>
+          </DialogHeader>
+          <div className="flex flex-col items-center justify-center p3-6 relative">
+            <p className="text-gray-700 text-center">
+              “ধন্যবাদ 💐! আপনার অর্ডারটি নিশ্চিত করা হয়েছে। কিছুক্ষণের মধ্যেই
+              আমাদের একজন প্রতিনিধি আপনার সাথে ফোনে যোগাযোগ করবেন।”
+            </p>
+            <button
+              className="mt-4 px-4 cursor-pointer py-2 bg-green-600 text-white rounded-md"
+              onClick={() => setModalOpen(false)}
+            >
+              ঠিক আছে
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       <p className="text-sm text-gray-500 mt-4 text-center">
         অর্ডার দিয়ে আপনি আমাদের সেবা শর্তাবলী এবং গোপনীয়তা নীতি সম্মত হন।
       </p>

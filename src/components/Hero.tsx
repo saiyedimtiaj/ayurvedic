@@ -1,16 +1,20 @@
 "use client";
+import "animate.css";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { motion } from "framer-motion";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Autoplay, Pagination } from "swiper/modules";
 import Image from "next/image";
 import logo from "../assets/ADIVASHI-LOGOiu-01.png";
+import banner1 from "../assets/Social Design 03-01(3-11-25)iu.jpg";
+import banner2 from "../assets/Social Design 02(3-11-25)iu.jpg";
+import banner3 from "../assets/Social Design 06 (12-03-25)iu.jpg";
+import banner4 from "../assets/social media design 05iu 12-3-25.jpg";
 
 export default function Hero() {
   return (
-    <div className="container mx-auto md:px-5">
+    <div className="container mx-auto px-3 md:px-14">
       <Image
         src={logo}
         alt="logo"
@@ -18,22 +22,11 @@ export default function Hero() {
         width={300}
         height={300}
       />
-      <motion.div
-        initial={{ rotate: 0 }}
-        animate={{
-          rotate: [0, 8, -8, 8, -8, 0], // Only shaking rotation effect
-        }}
-        transition={{
-          duration: 1.1,
-          ease: "easeInOut",
-        }}
-        style={{ transformOrigin: "center" }} // Keep the center fixed while shaking the edges
-        viewport={{ once: true }} // Trigger animation only once when the component appears
-      >
+      <div className="animate__swing animate__animated ">
         <Swiper
           centeredSlides={true}
           autoplay={{
-            delay: 2500,
+            delay: 1500,
           }}
           pagination={{
             clickable: true,
@@ -41,6 +34,46 @@ export default function Hero() {
           modules={[Autoplay, Pagination]}
           className="mySwiper"
         >
+          <SwiperSlide>
+            <Image
+              src={banner1}
+              alt="banner-1"
+              className="w-full h-auto object-cover"
+              width={1500}
+              height={800}
+              layout="responsive"
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <Image
+              src={banner2}
+              alt="banner-2"
+              className="w-full h-auto object-cover"
+              width={1500}
+              height={800}
+              layout="responsive"
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <Image
+              src={banner3}
+              alt="banner-1"
+              className="w-full h-auto object-cover"
+              width={1500}
+              height={800}
+              layout="responsive"
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <Image
+              src={banner4}
+              alt="banner-2"
+              className="w-full h-auto object-cover"
+              width={1500}
+              height={800}
+              layout="responsive"
+            />
+          </SwiperSlide>
           <SwiperSlide>
             <Image
               src="https://naturalsbyrakhi.com/wp-content/uploads/2022/08/Exit-Pop-Up-27.11.2024-copy.jpg"
@@ -51,18 +84,8 @@ export default function Hero() {
               layout="responsive"
             />
           </SwiperSlide>
-          <SwiperSlide>
-            <Image
-              src="https://naturalsbyrakhi.com/wp-content/uploads/2022/08/Web-Banner-discount-V2-1536x864.jpg"
-              alt="banner-2"
-              className="w-full h-auto object-cover"
-              width={1500}
-              height={800}
-              layout="responsive"
-            />
-          </SwiperSlide>
         </Swiper>
-      </motion.div>
+      </div>
     </div>
   );
 }

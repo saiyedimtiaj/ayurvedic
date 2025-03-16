@@ -1,6 +1,13 @@
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import ToggleMemu from "@/components/ToggleMemu";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Terms & Condition - Ayurvedic",
+  description: "ayurvedicbyadivashi",
+  icons: "./ADIVASHI-LOGOiu-01.svg",
+};
 
 const page = () => {
   return (
@@ -8,98 +15,98 @@ const page = () => {
       <div className="border-b py-5">
         <div className="container mx-auto px-2 md:px-4 flex items-center justify-between">
           <div></div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 md:gap-4">
             <Link href="/">Home</Link>
-            <Link href="/terms-and-condition">Terms & Condition</Link>
+            <Link href="/terms-and-condition"> Terms & Condition</Link>
+            <Link href="/privacy-policy">Privacy Policy</Link>
           </div>
         </div>
       </div>
       <div className="container mx-auto px-2 md:px-4 mb-10">
         <h1 className="text-2xl font-semi-bold mt-8 md:text-4xl">
-          1. Product information:
+          ১. পণ্য তথ্য:
         </h1>
         <p className="mt-5 md:text-lg">
-          We attempt to be as accurate as possible in the description of the
-          products displayed on the Website. Please note that we cannot be held
-          responsible for color shade differences that occur from screen
-          resolution issues. We are not authorized to give unedited pictures via
-          social media. Although we attempt to display colors accurately, we
-          cannot guarantee that your computer’s display of the images accurately
-          reflects the true color of the products. The sizes may vary depending
-          on different designs. <br /> Please contact our Customer Service
-          Advisors if you would like more information about a product.
-        </p>
-        <h1 className="text-2xl font-semi-bold mt-14 md:text-4xl">
-          2. Purchase Terms:
-        </h1>
-        <p className="mt-5 md:text-lg">
-          The Website allows you to check your order and correct any errors
-          before completing a purchase or transaction. Please take the time to
-          read and check your order at each page of the order process as you are
-          responsible for ensuring that the information is accurate.
-        </p>
-        <h1 className="text-2xl font-semi-bold mt-14 md:text-4xl">
-          3. Tax and Charges:
-        </h1>
-        <p className="mt-5 md:text-lg">
-          Depending on your delivery address, different taxation rules and
-          additional charges may apply.
-        </p>
-        <h1 className="text-2xl font-semi-bold mt-14 md:text-4xl">
-          4. Order Delivery:
-        </h1>
-        <p className="mt-5 md:text-lg">
-          The delivery is controlled by the courier services and we have no
-          control over it. We do not know the exact date and time of delivery.{" "}
+          আমরা আমাদের ওয়েবসাইটে প্রদর্শিত পণ্যের বিবরণ যথাসম্ভব সঠিকভাবে
+          প্রদানের চেষ্টা করি। দয়া করে মনে রাখবেন যে স্ক্রিন রেজোলিউশনের কারণে
+          রঙের পার্থক্যের জন্য আমরা দায়ী নই। আমরা সোশ্যাল মিডিয়ার মাধ্যমে
+          অপরিবর্তিত ছবি প্রদান করার অনুমতি পাইনি। যদিও আমরা রঙগুলি সঠিকভাবে
+          প্রদর্শনের চেষ্টা করি, তবে আপনার কম্পিউটারের ডিসপ্লে আসল রঙ সঠিকভাবে
+          প্রতিফলিত করতে পারে না। বিভিন্ন ডিজাইনের কারণে আকার পরিবর্তন হতে পারে।
           <br />
-          Our parcels are sent via courier service, so we really cannot control
-          when they deliver the products. When they call you, please let them
-          know your preferred time and date of delivery. The order cannot be
-          delayed. It can take maximum 72 hours!
+          পণ্য সম্পর্কে আরও তথ্যের জন্য আমাদের গ্রাহক পরিষেবা পরামর্শকদের সাথে
+          যোগাযোগ করুন।
         </p>
         <h1 className="text-2xl font-semi-bold mt-14 md:text-4xl">
-          5. Guarantee/Warranty:
+          ২. ক্রয়ের শর্তাবলী:
         </h1>
         <p className="mt-5 md:text-lg">
-          We can ensure that all our products are thoroughly tested before the
-          launch to ensure longevity and durability of the product. Please note
-          that the durability and longevity of any product depends on the care
-          and usage of the product. We will not be held responsible for any
-          issues occurring due to misuse or improper care of any product.
-        </p>
-        <h1 className="text-2xl font-semi-bold mt-14 md:text-4xl">6. Price:</h1>
-        <p className="mt-5 md:text-lg">
-          Price and availability information provided on this website is subject
-          to change without notice. All prices quoted are in Bangladeshi Taka.
+          ওয়েবসাইটটি আপনাকে আপনার অর্ডার পরীক্ষা করতে এবং ক্রয় বা লেনদেন
+          সম্পন্ন করার আগে কোনো ভুল সংশোধন করার অনুমতি দেয়। প্রতিটি অর্ডার
+          প্রক্রিয়ার সময় অনুগ্রহ করে আপনার অর্ডারটি পড়ুন এবং পরীক্ষা করুন,
+          কারণ আপনি নিশ্চিত করার জন্য দায়ী যে তথ্য সঠিক।
         </p>
         <h1 className="text-2xl font-semi-bold mt-14 md:text-4xl">
-          7. Availability in Store:
+          ৩. কর ও চার্জ:
         </h1>
         <p className="mt-5 md:text-lg">
-          We aren’t authorized to provide exact availability. We will not be
-          taking any responsibility if they are sold out by the time you visit.
+          আপনার ডেলিভারি ঠিকানার উপর নির্ভর করে বিভিন্ন কর নীতি এবং অতিরিক্ত
+          চার্জ প্রযোজ্য হতে পারে।
         </p>
         <h1 className="text-2xl font-semi-bold mt-14 md:text-4xl">
-          8. Booking Options:
+          ৪. অর্ডার ডেলিভারি:
         </h1>
         <p className="mt-5 md:text-lg">
-          We don’t follow booking option. You can purchase directly from our
-          stock.
+          ডেলিভারি কুরিয়ার সার্ভিস দ্বারা নিয়ন্ত্রিত হয় এবং আমরা এটির উপর
+          কোনো নিয়ন্ত্রণ রাখি না। আমরা সঠিক ডেলিভারির তারিখ এবং সময় জানি না।
+          <br />
+          আমাদের পণ্য কুরিয়ার সার্ভিসের মাধ্যমে পাঠানো হয়, তাই আমরা কখন তারা
+          ডেলিভারি করবে তা নিয়ন্ত্রণ করতে পারি না। তারা যখন আপনাকে কল করবে,
+          অনুগ্রহ করে তাদের আপনার পছন্দের সময় এবং তারিখ জানান। অর্ডার বিলম্ব
+          করা যাবে না। এটি সর্বাধিক ৭২ ঘণ্টা সময় নিতে পারে!
         </p>
         <h1 className="text-2xl font-semi-bold mt-14 md:text-4xl">
-          9. Cancelled Order:
+          ৫. গ্যারান্টি/ওয়ারেন্টি:
         </h1>
         <p className="mt-5 md:text-lg">
-          3 consecutive cancellations will result in your details being
-          blacklisted from our system and you will not be able to order with us
-          further.
+          আমরা নিশ্চিত করতে পারি যে আমাদের সমস্ত পণ্য লঞ্চের আগে স্থায়িত্ব ও
+          সহনশীলতার জন্য পরীক্ষা করা হয়। দয়া করে মনে রাখবেন যে পণ্যের
+          স্থায়িত্ব ও সহনশীলতা পণ্যটির যত্ন ও ব্যবহারের উপর নির্ভর করে। পণ্য
+          ব্যবহারের ভুল বা অনুপযুক্ত যত্নের কারণে কোনো সমস্যার জন্য আমরা দায়ী
+          থাকব না।
+        </p>
+        <h1 className="text-2xl font-semi-bold mt-14 md:text-4xl">৬. মূল্য:</h1>
+        <p className="mt-5 md:text-lg">
+          ওয়েবসাইটে প্রদত্ত মূল্য এবং প্রাপ্যতার তথ্য পূর্ব ঘোষণা ছাড়াই
+          পরিবর্তিত হতে পারে। সমস্ত মূল্য বাংলাদেশি টাকা তে দেওয়া হয়েছে।
         </p>
         <h1 className="text-2xl font-semi-bold mt-14 md:text-4xl">
-          10. Brand Copyrights:
+          ৭. দোকানে প্রাপ্যতা:
         </h1>
         <p className="mt-5 md:text-lg">
-          We hold our copyrights & trademarks exclusively for our products on
-          any of the display- website, social media, store.
+          আমরা সঠিক প্রাপ্যতা সরবরাহ করার অনুমোদিত নই। আপনি যখন দোকানে যাবেন তখন
+          এটি বিক্রি হয়ে গেলে আমরা দায়ী থাকব না।
+        </p>
+        <h1 className="text-2xl font-semi-bold mt-14 md:text-4xl">
+          ৮. বুকিং বিকল্প:
+        </h1>
+        <p className="mt-5 md:text-lg">
+          আমরা কোনো বুকিং বিকল্প অনুসরণ করি না। আপনি সরাসরি আমাদের স্টক থেকে
+          ক্রয় করতে পারেন।
+        </p>
+        <h1 className="text-2xl font-semi-bold mt-14 md:text-4xl">
+          ৯. বাতিলকৃত অর্ডার:
+        </h1>
+        <p className="mt-5 md:text-lg">
+          ধারাবাহিকভাবে ৩ বার অর্ডার বাতিল করলে, আপনার বিস্তারিত তথ্য আমাদের
+          সিস্টেমে ব্ল্যাকলিস্ট করা হবে এবং আপনি আর অর্ডার দিতে পারবেন না।
+        </p>
+        <h1 className="text-2xl font-semi-bold mt-14 md:text-4xl">
+          ১০. ব্র্যান্ড কপিরাইট:
+        </h1>
+        <p className="mt-5 md:text-lg">
+          আমরা আমাদের পণ্যগুলোর জন্য ওয়েবসাইট, সোশ্যাল মিডিয়া এবং দোকানের সকল
+          প্রদর্শনের উপর আমাদের কপিরাইট ও ট্রেডমার্কের অধিকার সংরক্ষণ করি।
         </p>
       </div>
       <ToggleMemu />

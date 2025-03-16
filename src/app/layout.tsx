@@ -1,12 +1,14 @@
-import { Poppins } from "next/font/google";
 import "./globals.css";
 import Image from "next/image";
 import PixelTrackerClient from "../components/PixelTrackerClient"; // Import the client component
+import { Metadata } from "next";
+import "animate.css";
 
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-});
+export const metadata: Metadata = {
+  title: "ayurvedicbyadivashi",
+  description: "ayurvedicbyadivashi",
+  icons: "./ADIVASHI-LOGOiu-01.svg",
+};
 
 export default function RootLayout({
   children,
@@ -45,7 +47,7 @@ export default function RootLayout({
           />
         </noscript>
       </head>
-      <body className={`${poppins.className} antialiased`}>
+      <body className={`antialiased`}>
         <PixelTrackerClient /> {/* Now using the client component */}
         {children}
       </body>

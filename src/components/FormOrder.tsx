@@ -1,10 +1,10 @@
 "use client";
 import { TFormData, TProduct } from "@/types";
-import { convertToBangla } from "@/utils";
 import Image from "next/image";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import OrderDetails from "./OrderDetails";
 import { purchaseEvent } from "@/services/fbPixel"; // Corrected function name
+import axios from "axios";
 
 const FormOrder = ({
   setFormErrors,
@@ -26,7 +26,7 @@ const FormOrder = ({
 
   const selectedProduct =
     products.find((p: TProduct) => p.id === formData.productId) || products[0];
-  const subtotal = selectedProduct.price;
+  const subtotal = selectedProduct.offerPrice;
   const total = subtotal + parseInt(shipping as string);
 
   const handleShippingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,7 +48,7 @@ const FormOrder = ({
 
   useEffect(() => {
     if (selectedProduct.isFreeDelibery === false) {
-      setShipping("40");
+      setShipping("80");
     } else {
       setShipping("0");
     }
@@ -68,6 +68,8 @@ const FormOrder = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setFormErrors([]);
+
     const errors: string[] = [];
 
     if (!formData.name.trim()) errors.push("Name");
@@ -83,21 +85,29 @@ const FormOrder = ({
       return;
     }
 
-    const resData = {
-      name: formData.name,
-      mobile: formData.mobile,
-      address: formData.address,
-      productId: formData.productId,
-      productName: formData.productName,
-      subtotal,
-      shipping,
-      total,
-      status: "Pending",
-    };
-    purchaseEvent(resData); // Corrected function call
+    try {
+      const orderData = {
+        name: formData.name,
+        mobile: formData.mobile,
+        address: formData.address,
+        productId: formData.productId,
+        productName: formData.productName,
+        subtotal,
+        shipping,
+        total,
+        status: "Pending",
+      };
+      purchaseEvent(orderData); // Corrected function call
+      const { data } = await axios.post("/api/orders", orderData);
 
-    setOrderSuccess(true);
-    setLoading(false);
+      if (data.success) {
+        setOrderSuccess(true);
+      }
+    } catch (error) {
+      console.error("Order submission failed:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -105,14 +115,16 @@ const FormOrder = ({
       <div className="flex flex-col md:flex-row gap-8">
         {/* Customer Information */}
         <div className="flex-1">
-          <h3 className="text-xl font-bold text-gray-800 mb-6">আপনার তথ্য</h3>
+          <h3 className="text-xl font-bold text-green-700 mb-6">
+            Billing details
+          </h3>
 
           <div className="mb-6">
             <label
               htmlFor="name"
               className="block text-gray-700 font-semibold mb-2"
             >
-              পূর্ণ নাম
+              আপনার নাম লিখুন *
             </label>
             <input
               type="text"
@@ -148,7 +160,7 @@ const FormOrder = ({
               htmlFor="address"
               className="block text-gray-700 font-semibold mb-2"
             >
-              ঠিকানা
+              আপনার ঠিকানা লিখুন *
             </label>
             <textarea
               id="address"
@@ -157,29 +169,37 @@ const FormOrder = ({
               onChange={handleInputChange}
               rows={3}
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-              placeholder="আপনার ঠিকানা লিখুন"
+              placeholder="বাসা নং, রোড নং, থানা, জেলা"
             />
           </div>
 
           {/* Product Selection */}
-          <h3 className="text-xl font-bold text-gray-800 mb-6">
-            আপনার পণ্য নির্বাচন করুন
+          <h3 className="text-xl font-bold text-green-700 mb-6">
+            কোন প্যাকেজটি নিতে চান সিলেক্ট করুন:
           </h3>
           <div className="grid grid-cols-1 gap-4 mb-8">
             {products.map((product) => (
               <div
                 key={product.id}
                 onClick={() => handleProductSelect(product.id)}
-                className={`relative overflow-hidden flex items-center py-4 px-2 md:p-4 border rounded-lg cursor-pointer transition-all duration-200 ${
+                className={`relative order-card overflow-hidden flex items-center py-4 px-2 md:py-6 md:px-4 border rounded-lg cursor-pointer transition-all duration-200 ${
                   formData.productId === product.id
                     ? "border-zinc-400 bg-zinc-200"
                     : "border-zinc-400"
                 }`}
               >
                 {/* Free Delivery Tag */}
-                {product.isFreeDelibery && (
-                  <span className="absolute top-4 rotate-45 -right-7 bg-green-700 text-white text-xs md:font-bold font-medium px-6 py-1 rounded">
-                    ফ্রি ডেলিভারি
+                {product.isHotSales && (
+                  <span
+                    className={`absolute ${
+                      product.isHotSales == "SUPER Combo"
+                        ? "bottom-6 -right-7"
+                        : product.isHotSales == "FAMILY Combo"
+                        ? "bottom-6 -right-7"
+                        : "bottom-5 -right-6"
+                    } rotate-[-43deg] bg-orange-500 text-white text-xs md:font-bold font-medium px-6 py-1 rounded`}
+                  >
+                    {product.isHotSales}
                   </span>
                 )}
 
@@ -191,19 +211,21 @@ const FormOrder = ({
                   className="w-16 h-16 object-cover rounded-md mr-4"
                 />
                 <div className="md:flex-1 z-50">
-                  <h4 className="font-bold ">{product.name}</h4>
-                  <p className="hidden md:block text-sm text-gray-600">
-                    {product.description}
-                  </p>
+                  <h4 className="font-bold mb-3">{product.name}</h4>
+                  {product.isFreeDelibery && (
+                    <span className="bg-green-700 text-white text-xs font-semibold px-2.5 py-0.5 rounded-full ">
+                      ফ্রি ডেলিভারি
+                    </span>
+                  )}
                   <p className="block md:hidden font-bold text-black">
                     <span className="text-sm font-extrabold mr-1">৳</span>
-                    {convertToBangla(product.price)}
+                    {product.offerPrice}
                   </p>
                 </div>
                 <div className="md:block hidden z-50 text-right md:mr-6">
                   <p className="font-bold text-black">
                     <span className="text-sm font-extrabold mr-1">৳</span>
-                    {convertToBangla(product.price)}
+                    {product.offerPrice}
                   </p>
                 </div>
               </div>

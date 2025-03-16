@@ -1,9 +1,11 @@
 "use client";
 
 import { AlertCircle, CheckCircle } from "lucide-react";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { TFormData, TProduct } from "@/types";
 import dynamic from "next/dynamic";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const FormOrder = dynamic(() => import("./FormOrder"), {
   ssr: false,
@@ -21,14 +23,26 @@ const OrderForm = ({
   const [formErrors, setFormErrors] = useState<string[]>([]);
   const [orderSuccess, setOrderSuccess] = useState<boolean>(false);
 
+  useEffect(() => {
+    AOS.init({
+      duration: 200,
+    });
+  }, []);
+
   return (
     <section id="order-form" className="py-20 bg-white">
       <div className="container mx-auto px-2 md:px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+          <h2
+            data-aos="fade-up"
+            className="text-3xl md:text-4xl font-bold text-green-700 mb-4"
+          >
             আপনার অর্ডার দিন
           </h2>
-          <p className="md:text-lg text-gray-600 max-w-2xl mx-auto">
+          <p
+            data-aos="fade-up"
+            className="md:text-lg text-gray-600 max-w-2xl mx-auto"
+          >
             আপনার অর্ডার প্লেস করতে নিচের ফর্মটি পূর্ণ করুন। আমরা অর্ডার নিশ্চিত
             করতে আপনার সাথে যোগাযোগ করব।
           </p>
