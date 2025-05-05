@@ -53,100 +53,269 @@ export const faqItems = [
   },
 ];
 
-export const orders = [
+export const Citys = [
   {
-    id: "ORD-2025-001",
-    customer: "Sarah Johnson",
-    email: "sarah.j@example.com",
-    date: "2025-04-15",
-    total: 59.98,
-    status: "Delivered",
+    city_id: 52,
+    city_name: "Bagerhat",
   },
   {
-    id: "ORD-2025-002",
-    customer: "Michael Chen",
-    email: "mchen@example.com",
-    date: "2025-04-14",
-    total: 34.99,
-    status: "Processing",
+    city_id: 62,
+    city_name: "Bandarban ",
   },
   {
-    id: "ORD-2025-003",
-    customer: "Emily Rodriguez",
-    email: "emily.r@example.com",
-    date: "2025-04-12",
-    total: 49.98,
-    status: "Shipped",
+    city_id: 34,
+    city_name: "Barguna ",
   },
   {
-    id: "ORD-2025-004",
-    customer: "David Wilson",
-    email: "dwilson@example.com",
-    date: "2025-04-10",
-    total: 19.99,
-    status: "Delivered",
+    city_id: 17,
+    city_name: "Barisal",
   },
   {
-    id: "ORD-2025-005",
-    customer: "Jessica Brown",
-    email: "jbrown@example.com",
-    date: "2025-04-08",
-    total: 89.97,
-    status: "Cancelled",
-  },
-];
-
-export const demoOrders = [
-  {
-    _id: "64a1b2c3d4e5f67890123456",
-    name: "John Doe",
-    mobile: "01712345678",
-    address: "123 Green Street, Dhaka, Bangladesh",
-    productId: 101,
-    productName: "Camping Tent",
-    subtotal: 5000,
-    shipping: 200,
-    total: 5200,
-    createdAt: new Date("2024-08-30T10:30:00Z"),
-    status: "Pending",
+    city_id: 32,
+    city_name: "B. Baria",
   },
   {
-    _id: "64a1b2c3d4e5f67890123457",
-    name: "Jane Smith",
-    mobile: "01898765432",
-    address: "456 Blue Avenue, Chittagong, Bangladesh",
-    productId: 102,
-    productName: "Sleeping Bag",
-    subtotal: 2500,
-    shipping: 150,
-    total: 2650,
-    createdAt: new Date("2024-08-29T14:45:00Z"),
-    status: "Shipped",
+    city_id: 53,
+    city_name: "Bhola",
   },
   {
-    _id: "64a1b2c3d4e5f67890123458",
-    name: "Michael Johnson",
-    mobile: "01911223344",
-    address: "789 Red Road, Sylhet, Bangladesh",
-    productId: 103,
-    productName: "Hiking Backpack",
-    subtotal: 4000,
-    shipping: 180,
-    total: 4180,
-    createdAt: new Date("2024-08-28T08:20:00Z"),
-    status: "Delivered",
+    city_id: 9,
+    city_name: "Bogra",
   },
   {
-    _id: "64a1b2c3d4e5f67890123459",
-    name: "Emily Davis",
-    mobile: "01655667788",
-    address: "321 White Lane, Khulna, Bangladesh",
-    productId: 104,
-    productName: "Portable Stove",
-    subtotal: 3000,
-    shipping: 160,
-    total: 3160,
-    createdAt: new Date("2024-08-27T18:10:00Z"),
-    status: "Cancelled",
+    city_id: 8,
+    city_name: "Chandpur",
+  },
+  {
+    city_id: 15,
+    city_name: "Chapainawabganj",
+  },
+  {
+    city_id: 2,
+    city_name: "Chittagong",
+  },
+  {
+    city_id: 61,
+    city_name: "Chuadanga",
+  },
+  {
+    city_id: 11,
+    city_name: "Cox's Bazar",
+  },
+  {
+    city_id: 5,
+    city_name: "Cumilla",
+  },
+  {
+    city_id: 1,
+    city_name: "Dhaka",
+  },
+  {
+    city_id: 146,
+    city_name: "Dhakaaaaaaaa",
+  },
+  {
+    city_id: 35,
+    city_name: "Dinajpur",
+  },
+  {
+    city_id: 18,
+    city_name: "Faridpur",
+  },
+  {
+    city_id: 6,
+    city_name: "Feni",
+  },
+  {
+    city_id: 38,
+    city_name: "Gaibandha",
+  },
+  {
+    city_id: 22,
+    city_name: "Gazipur",
+  },
+  {
+    city_id: 56,
+    city_name: "Gopalgonj ",
+  },
+  {
+    city_id: 30,
+    city_name: "Habiganj",
+  },
+  {
+    city_id: 41,
+    city_name: "Jamalpur",
+  },
+  {
+    city_id: 19,
+    city_name: "Jashore",
+  },
+  {
+    city_id: 27,
+    city_name: "Jhalokathi",
+  },
+  {
+    city_id: 49,
+    city_name: "Jhenidah",
+  },
+  {
+    city_id: 48,
+    city_name: "Joypurhat",
+  },
+  {
+    city_id: 63,
+    city_name: "Khagrachari",
+  },
+  {
+    city_id: 20,
+    city_name: "Khulna",
+  },
+  {
+    city_id: 42,
+    city_name: "Kishoreganj",
+  },
+  {
+    city_id: 55,
+    city_name: "Kurigram ",
+  },
+  {
+    city_id: 28,
+    city_name: "Kushtia",
+  },
+  {
+    city_id: 40,
+    city_name: "Lakshmipur",
+  },
+  {
+    city_id: 57,
+    city_name: "Lalmonirhat ",
+  },
+  {
+    city_id: 43,
+    city_name: "Madaripur",
+  },
+  {
+    city_id: 60,
+    city_name: "Magura ",
+  },
+  {
+    city_id: 16,
+    city_name: "Manikganj",
+  },
+  {
+    city_id: 50,
+    city_name: "Meherpur",
+  },
+  {
+    city_id: 12,
+    city_name: "Moulvibazar",
+  },
+  {
+    city_id: 23,
+    city_name: "Munsiganj",
+  },
+  {
+    city_id: 26,
+    city_name: "Mymensingh",
+  },
+  {
+    city_id: 147,
+    city_name: "Nahid",
+  },
+  {
+    city_id: 46,
+    city_name: "Naogaon",
+  },
+  {
+    city_id: 54,
+    city_name: "Narail ",
+  },
+  {
+    city_id: 21,
+    city_name: "Narayanganj",
+  },
+  {
+    city_id: 47,
+    city_name: "Narshingdi",
+  },
+  {
+    city_id: 14,
+    city_name: "Natore",
+  },
+  {
+    city_id: 44,
+    city_name: "Netrakona",
+  },
+  {
+    city_id: 39,
+    city_name: "Nilphamari",
+  },
+  {
+    city_id: 7,
+    city_name: "Noakhali",
+  },
+  {
+    city_id: 24,
+    city_name: "Pabna",
+  },
+  {
+    city_id: 37,
+    city_name: "Panchagarh",
+  },
+  {
+    city_id: 29,
+    city_name: "Patuakhali",
+  },
+  {
+    city_id: 31,
+    city_name: "Pirojpur",
+  },
+  {
+    city_id: 58,
+    city_name: "Rajbari ",
+  },
+  {
+    city_id: 4,
+    city_name: "Rajshahi",
+  },
+  {
+    city_id: 59,
+    city_name: "Rangamati ",
+  },
+  {
+    city_id: 25,
+    city_name: "Rangpur",
+  },
+  {
+    city_id: 51,
+    city_name: "Satkhira",
+  },
+  {
+    city_id: 64,
+    city_name: "Shariatpur ",
+  },
+  {
+    city_id: 33,
+    city_name: "Sherpur",
+  },
+  {
+    city_id: 10,
+    city_name: "Sirajganj",
+  },
+  {
+    city_id: 45,
+    city_name: "Sunamganj",
+  },
+  {
+    city_id: 3,
+    city_name: "Sylhet",
+  },
+  {
+    city_id: 13,
+    city_name: "Tangail",
+  },
+  {
+    city_id: 36,
+    city_name: "Thakurgaon ",
   },
 ];

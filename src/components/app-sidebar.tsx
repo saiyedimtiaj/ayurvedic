@@ -9,27 +9,40 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { MdDashboard } from "react-icons/md";
-
-// This is sample data.
-const data = {
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "/admin",
-      icon: MdDashboard,
-      isActive: true,
-    },
-  ],
-};
+import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import logo from "../assets/ADIVASHI-LOGOiu-01.png";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const pathname = usePathname();
+
+  const data = {
+    navMain: [
+      {
+        title: "Dashboard",
+        url: "/admin",
+        icon: MdDashboard,
+        isActive: pathname === "/admin",
+      },
+    ],
+  };
+
   return (
-    <Sidebar className="border-r-0 " {...props}>
-      <h1 className="text-3xl p-4 font-medium">Hello</h1>
+    <Sidebar className="border-r-0" {...props}>
+      <Link href="/">
+        <Image
+          src={logo}
+          alt="logo"
+          className="w-24 mx-auto"
+          width={300}
+          height={300}
+        />
+      </Link>
       <SidebarHeader>
         <NavMain items={data.navMain} />
       </SidebarHeader>
-      <SidebarContent></SidebarContent>
+      <SidebarContent />
       <SidebarRail />
     </Sidebar>
   );

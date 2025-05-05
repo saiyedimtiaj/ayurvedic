@@ -1,10 +1,9 @@
 "use client";
 
 import { AlertCircle, CheckCircle } from "lucide-react";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { TFormData, TProduct } from "@/types";
 import dynamic from "next/dynamic";
-import AOS from "aos";
 import "aos/dist/aos.css";
 
 const FormOrder = dynamic(() => import("./FormOrder"), {
@@ -23,28 +22,12 @@ const OrderForm = ({
   const [formErrors, setFormErrors] = useState<string[]>([]);
   const [orderSuccess, setOrderSuccess] = useState<boolean>(false);
 
-  useEffect(() => {
-    AOS.init({
-      duration: 200,
-    });
-  }, []);
-
   return (
-    <section id="order-form" className="py-20 bg-white">
+    <section id="order-form" className="py-3 md:py-20 bg-white">
       <div className="container mx-auto px-2 md:px-4">
-        <div className="text-center mb-16">
-          <h2
-            data-aos="fade-up"
-            className="text-3xl md:text-4xl font-bold text-green-700 mb-4"
-          >
-            আপনার অর্ডার দিন
-          </h2>
-          <p
-            data-aos="fade-up"
-            className="md:text-lg text-gray-600 max-w-2xl mx-auto"
-          >
-            আপনার অর্ডার প্লেস করতে নিচের ফর্মটি পূর্ণ করুন। আমরা অর্ডার নিশ্চিত
-            করতে আপনার সাথে যোগাযোগ করব।
+        <div className="text-center mb-3 md:mb-16">
+          <p className="text-base text-green-700 font-semibold max-w-2xl mx-auto">
+            অর্ডার করতে আপনার সঠিক তথ্য দিয়ে নিচের ফর্মটি সম্পূর্ণ পূরন করুন।
           </p>
         </div>
 

@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "naturalsbyrakhi.com",
+        hostname: "ayurvedicbyadivashi.com",
       },
       {
         protocol: "https",

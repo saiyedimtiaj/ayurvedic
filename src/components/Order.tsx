@@ -13,23 +13,9 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import {
-  CheckCircle,
-  ChevronDown,
-  Clock,
-  Edit,
-  Truck,
-  XCircle,
-} from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -43,37 +29,8 @@ import { TOrder } from "@/types";
 import ChangeStatusModal from "./ChangeStatusModal";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { Badge } from "./ui/badge";
-
-const getStatusIcon = (status: string) => {
-  switch (status) {
-    case "Delivered":
-      return <CheckCircle size={16} className="text-green-500" />;
-    case "Pending":
-      return <Clock size={16} className="text-yellow-500" />;
-    case "Shipped":
-      return <Truck size={16} className="text-blue-500" />;
-    case "Cancelled":
-      return <XCircle size={16} className="text-red-500" />;
-    default:
-      return null;
-  }
-};
-
-const getStatusClass = (status: string) => {
-  switch (status) {
-    case "Delivered":
-      return "bg-green-100 text-green-800";
-    case "Processing":
-      return "bg-yellow-100 text-yellow-800";
-    case "Shipped":
-      return "bg-blue-100 text-blue-800";
-    case "Cancelled":
-      return "bg-red-100 text-red-800";
-    default:
-      return "bg-gray-100 text-gray-800";
-  }
-};
+import OrderDetailsModal from "./OrderDetailsModal";
+import { IOrder } from "@/model/order";
 
 const fetchOrders = async () => {
   const { data } = await axios.get("/api/orders");
@@ -89,9 +46,11 @@ export default function DataTableDemo() {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
   const [isOpen, setIsOpen] = React.useState(false);
-  const [id, setId] = React.useState("");
+  const [isDetailsOpen, setIsDetailsOpen] = React.useState(false);
+  const [details, setDetails] = React.useState<TOrder | undefined>(undefined);
+  const [orderDetails, setOrderDetails] = React.useState<IOrder | undefined>();
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["orders"],
     queryFn: fetchOrders,
   });
@@ -99,22 +58,72 @@ export default function DataTableDemo() {
   const columns: ColumnDef<TOrder>[] = [
     {
       accessorKey: "name",
-      header: "Customer Name",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Customar Name
+            <ArrowUpDown />
+          </Button>
+        );
+      },
       cell: ({ row }) => (
         <div className="capitalize">{row.getValue("name")}</div>
       ),
     },
     {
-      accessorKey: "productName",
-      header: "Product Name",
+      accessorKey: "product",
+      header: "Product",
       cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("productName")}</div>
+        <div className="w-[300px]">
+          {row?.original?.products?.map((prod, index) => {
+            const text = `${prod?.name.replace(/\।/g, " ")} , ${
+              prod?.quantity
+            } টি ।`;
+
+            // Split the text into chunks of around 40 characters without breaking words
+            const words = text.split(" ");
+            // eslint-disable-next-line prefer-const
+            let lines = [];
+            let currentLine = "";
+
+            words.forEach((word) => {
+              if ((currentLine + word).length > 45) {
+                lines.push(currentLine.trim());
+                currentLine = word + " ";
+              } else {
+                currentLine += word + " ";
+              }
+            });
+
+            if (currentLine.trim()) lines.push(currentLine.trim());
+
+            return (
+              <div key={index}>
+                {lines.map((line, i) => (
+                  <p key={i}>{line}</p>
+                ))}
+              </div>
+            );
+          })}
+        </div>
       ),
     },
+
     {
       accessorKey: "mobile",
-      header: ({}) => {
-        return <Button variant="ghost">mobile</Button>;
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Mobile
+            <ArrowUpDown />
+          </Button>
+        );
       },
       cell: ({ row }) => (
         <div className="lowercase">{row.getValue("mobile")}</div>
@@ -129,31 +138,38 @@ export default function DataTableDemo() {
     },
     {
       accessorKey: "amount",
-      header: () => <div className="text-right">Amount</div>,
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Amount
+            <ArrowUpDown />
+          </Button>
+        );
+      },
       cell: ({ row }) => {
         return (
-          <div className="text-right font-medium">
-            BDT {row.original.total.toFixed()}
+          <div className="font-medium">
+            <span className="text-xl font-bold">৳ </span>
+            {row.original.total.toFixed()}
           </div>
         );
       },
     },
     {
-      accessorKey: "status",
-      header: () => <div className="text-left">Status</div>,
-      cell: ({ row }) => {
-        return (
-          <Badge className={` ${getStatusClass(row.original.status)}`}>
-            <span className="mr-1">{getStatusIcon(row.original.status)}</span>
-            <span>{row.original.status}</span>
-          </Badge>
-        );
-      },
-    },
-    {
       accessorKey: "createdAt",
-      header: ({}) => {
-        return <Button variant="ghost">Order At</Button>;
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Order At
+            <ArrowUpDown />
+          </Button>
+        );
       },
       cell: ({ row }) => (
         <div className="lowercase">
@@ -167,16 +183,30 @@ export default function DataTableDemo() {
       enableHiding: false,
       cell: ({ row }) => {
         return (
-          <Button
-            onClick={() => {
-              setIsOpen(true);
-              setId(row.original?._id);
-            }}
-            className="cursor-pointer"
-            variant="ghost"
-          >
-            <Edit />
-          </Button>
+          <>
+            {row.original?.status === "Delivery" ? (
+              <Button
+                onClick={() => {
+                  setIsDetailsOpen(true);
+                  setDetails(row.original);
+                }}
+                className="bg-green-800 hover:bg-green-900 text-white"
+              >
+                View Details
+              </Button>
+            ) : (
+              <Button
+                onClick={() => {
+                  setIsOpen(true);
+                  setOrderDetails(row.original as unknown as IOrder);
+                }}
+                className="cursor-pointer"
+                variant="secondary"
+              >
+                Place Order
+              </Button>
+            )}
+          </>
         );
       },
     },
@@ -201,24 +231,12 @@ export default function DataTableDemo() {
     },
   });
 
-  const handleStatusFilterChange = (status: string) => {
-    if (status === "") {
-      setColumnFilters([]);
-    } else {
-      setColumnFilters([
-        {
-          id: "status",
-          value: status,
-        },
-      ]);
-    }
-  };
-
   if (isLoading) {
     return <div className="text-center py-4">Loading orders...</div>;
   }
 
   if (error) {
+    console.log(error);
     return (
       <div className="text-center py-4 text-red-500">
         Failed to load orders.
@@ -230,41 +248,13 @@ export default function DataTableDemo() {
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter Name..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter Phone..."
+          value={(table.getColumn("mobile")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
+            table.getColumn("mobile")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Status <ChevronDown />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Choose Status</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => handleStatusFilterChange("Delivered")}
-            >
-              Delivered
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => handleStatusFilterChange("Pending")}
-            >
-              Pending
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => handleStatusFilterChange("Cancelled")}
-            >
-              Cancelled
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleStatusFilterChange("")}>
-              Show All
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
       </div>
       <div className="rounded-md border">
         <Table>
@@ -340,7 +330,22 @@ export default function DataTableDemo() {
           </Button>
         </div>
       </div>
-      <ChangeStatusModal id={id} isOpen={isOpen} setIsOpen={setIsOpen} />
+      {orderDetails && (
+        <ChangeStatusModal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          refetch={refetch}
+          orderDetails={orderDetails}
+          setOrderDetails={setOrderDetails}
+        />
+      )}
+      {details && (
+        <OrderDetailsModal
+          selectOrderDetails={details}
+          isOpen={isDetailsOpen}
+          setIsOpen={setIsDetailsOpen}
+        />
+      )}
     </div>
   );
 }

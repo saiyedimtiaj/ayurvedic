@@ -37,7 +37,9 @@ export default function AnimatedSocialIcon() {
             duration: 0.5,
             delay: isOpen ? 0.4 : 0,
           }}
-          className="p-3 bg-blue-600 text-white rounded-full shadow-md"
+          className={`p-3 bg-blue-600 text-white rounded-full shadow-md ${
+            isOpen ? "block" : "hidden"
+          }`}
         >
           <FaPhoneAlt size={28} />
         </motion.a>
@@ -54,7 +56,9 @@ export default function AnimatedSocialIcon() {
             duration: 0.5,
             delay: isOpen ? 0.2 : 0,
           }}
-          className="p-2 bg-green-500 text-white rounded-full shadow-md"
+          className={`p-2 bg-green-500 text-white rounded-full shadow-md ${
+            isOpen ? "block" : "hidden"
+          }`}
         >
           <FaWhatsapp size={35} />
         </motion.a>

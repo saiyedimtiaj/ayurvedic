@@ -1,12 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface TProduct {
   id: number;
   name: string;
   price: number;
-  image: string;
+  image: string | any;
   isFreeDelibery: boolean;
   isHotSales?: string;
   offerPrice: number;
-  tag: string;
+  tag?: string;
+  quantity?: number;
 }
 
 export type TFaqItems = {
@@ -19,19 +21,28 @@ export interface TOrder {
   name: string;
   mobile: string;
   address: string;
-  productId: number;
-  productName: string;
+  products: { name: string; quantity: number }[];
   subtotal: number;
   shipping: number;
   total: number;
   createdAt: Date;
   status: string;
+  consignment_id?: string;
 }
 
 export interface TFormData {
   name: string;
   mobile: string;
   address: string;
-  productId: number;
-  productName: string;
+  selectedProducts: {
+    id: number;
+    name: string;
+    price: number;
+    image: string | File | unknown;
+    isFreeDelibery: boolean;
+    tag?: string;
+    offerPrice: number;
+    isHotSales?: string;
+    quantity: number;
+  }[];
 }

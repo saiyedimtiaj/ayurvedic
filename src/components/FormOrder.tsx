@@ -2,9 +2,10 @@
 import { TFormData, TProduct } from "@/types";
 import Image from "next/image";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import OrderDetails from "./OrderDetails";
-import { purchaseEvent } from "@/services/fbPixel"; // Corrected function name
 import axios from "axios";
+import { toast } from "sonner";
+import OrderDetails from "./OrderDetails";
+import { purchaseEvent } from "@/services/fbPixel";
 
 const FormOrder = ({
   setFormErrors,
@@ -23,11 +24,13 @@ const FormOrder = ({
 }) => {
   const [shipping, setShipping] = useState<string>("0");
   const [loading, setLoading] = useState<boolean>(false);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const subtotal = formData.selectedProducts.reduce(
+    (acc, product) => acc + product.offerPrice * product.quantity,
+    0
+  );
 
-  const selectedProduct =
-    products.find((p: TProduct) => p.id === formData.productId) || products[0];
-  const subtotal = selectedProduct.offerPrice;
-  const total = subtotal + parseInt(shipping as string);
+  const total = subtotal + parseInt(shipping);
 
   const handleShippingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setShipping(e.target.value);
@@ -47,21 +50,46 @@ const FormOrder = ({
   };
 
   useEffect(() => {
-    if (selectedProduct.isFreeDelibery === false) {
-      setShipping("80");
-    } else {
+    const hasFreeDelivery = formData.selectedProducts.some(
+      (product) => product.isFreeDelibery === true
+    ); // Get the first selected product
+    if (hasFreeDelivery) {
       setShipping("0");
+    } else {
+      setShipping("80");
     }
-  }, [selectedProduct]);
+  }, [formData.selectedProducts]);
 
   const handleProductSelect = (productId: number) => {
     const product = products.find((p) => p.id === productId);
     if (product) {
-      setFormData((prev) => ({
-        ...prev,
-        productId,
-        productName: product.name,
-      }));
+      setFormData((prev) => {
+        const isProductSelected = prev.selectedProducts.some(
+          (p) => p.id === productId
+        );
+
+        if (isProductSelected) {
+          // Prevent removal if only one product is selected
+          if (prev.selectedProducts.length === 1) {
+            return prev;
+          }
+
+          return {
+            ...prev,
+            selectedProducts: prev.selectedProducts.filter(
+              (p) => p.id !== productId
+            ),
+          };
+        } else {
+          return {
+            ...prev,
+            selectedProducts: [
+              ...prev.selectedProducts,
+              { ...product, quantity: 1 },
+            ],
+          };
+        }
+      });
     }
   };
 
@@ -69,6 +97,10 @@ const FormOrder = ({
     e.preventDefault();
     setLoading(true);
     setFormErrors([]);
+    if (formData.selectedProducts.length === 0) {
+      toast.error("Please select a product!");
+      return;
+    }
 
     const errors: string[] = [];
 
@@ -90,8 +122,12 @@ const FormOrder = ({
         name: formData.name,
         mobile: formData.mobile,
         address: formData.address,
-        productId: formData.productId,
-        productName: formData.productName,
+        products: formData.selectedProducts.map((prod) => ({
+          name: prod.name,
+          quantity: prod.quantity,
+          price: prod.offerPrice,
+          isFreeDelivery: prod.isFreeDelibery,
+        })), // Send selected products
         subtotal,
         shipping,
         total,
@@ -102,6 +138,7 @@ const FormOrder = ({
 
       if (data.success) {
         setOrderSuccess(true);
+        setModalOpen(true);
       }
     } catch (error) {
       console.error("Order submission failed:", error);
@@ -155,7 +192,7 @@ const FormOrder = ({
             />
           </div>
 
-          <div className="mb-6">
+          <div className="md:mb-6 mb-2">
             <label
               htmlFor="address"
               className="block text-gray-700 font-semibold mb-2"
@@ -174,16 +211,16 @@ const FormOrder = ({
           </div>
 
           {/* Product Selection */}
-          <h3 className="text-xl font-bold text-green-700 mb-6">
-            কোন প্যাকেজটি নিতে চান সিলেক্ট করুন:
+          <h3 className="text-[18px] md:text-left text-center font-bold text-green-700 mb-2 md:mb-6">
+            পছন্দের প্যাকেজটি সিলেক্ট করে নিচে চলুন:
           </h3>
-          <div className="grid grid-cols-1 gap-4 mb-8">
+          <div className="grid grid-cols-1 gap-4 -mb-5 md:mb-8">
             {products.map((product) => (
               <div
                 key={product.id}
                 onClick={() => handleProductSelect(product.id)}
-                className={`relative order-card overflow-hidden flex items-center py-4 px-2 md:py-6 md:px-4 border rounded-lg cursor-pointer transition-all duration-200 ${
-                  formData.productId === product.id
+                className={`relative order-card overflow-hidden flex items-center py-1 px-1 md:py-6 md:px-4 border rounded-lg cursor-pointer transition-all duration-200 ${
+                  formData.selectedProducts.some((p) => p.id === product.id)
                     ? "border-zinc-400 bg-zinc-200"
                     : "border-zinc-400"
                 }`}
@@ -192,9 +229,9 @@ const FormOrder = ({
                 {product.isHotSales && (
                   <span
                     className={`absolute ${
-                      product.isHotSales == "SUPER Combo"
+                      product.isHotSales === "SUPER Combo"
                         ? "bottom-6 -right-7"
-                        : product.isHotSales == "FAMILY Combo"
+                        : product.isHotSales === "FAMILY Combo"
                         ? "bottom-6 -right-7"
                         : "bottom-5 -right-6"
                     } rotate-[-43deg] bg-orange-500 text-white text-xs md:font-bold font-medium px-6 py-1 rounded`}
@@ -236,12 +273,16 @@ const FormOrder = ({
         {/* Order Summary */}
         <OrderDetails
           handleShippingChange={handleShippingChange}
-          selectedProduct={selectedProduct}
           subtotal={subtotal}
           total={total}
           loading={loading}
           orderSuccess={orderSuccess}
           shipping={shipping}
+          modalOpen={modalOpen}
+          setModalOpen={setModalOpen}
+          selectedProducts={formData.selectedProducts}
+          setFormData={setFormData}
+          formData={formData}
         />
       </div>
     </form>

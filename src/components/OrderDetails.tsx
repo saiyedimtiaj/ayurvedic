@@ -1,8 +1,8 @@
-import { CheckCircle, Loader2, ShoppingBag, Truck } from "lucide-react";
+import { Loader2, ShoppingBag } from "lucide-react";
 import { SlCheck } from "react-icons/sl";
 import Image from "next/image";
-import React, { useState } from "react";
-import { TProduct } from "@/types";
+import React, { Dispatch, SetStateAction } from "react";
+import { TFormData, TProduct } from "@/types";
 import { motion } from "framer-motion";
 import Confetti from "react-confetti";
 import {
@@ -12,45 +12,110 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-const OrderDetails = ({
-  selectedProduct,
-  subtotal,
-  handleShippingChange,
-  total,
-  loading,
-  orderSuccess,
-  shipping,
-}: {
+interface OrderDetailsProps {
   total: number;
-  selectedProduct: TProduct;
+  selectedProducts: TProduct[];
   subtotal: number;
   handleShippingChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   loading: boolean;
   orderSuccess: boolean;
   shipping: string;
+  modalOpen: boolean;
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setFormData: Dispatch<SetStateAction<TFormData>>;
+  formData: TFormData;
+}
+
+const OrderDetails: React.FC<OrderDetailsProps> = ({
+  total,
+  selectedProducts,
+  subtotal,
+  handleShippingChange,
+  loading,
+  orderSuccess,
+  shipping,
+  modalOpen,
+  setModalOpen,
+  setFormData,
+  formData,
 }) => {
-  const [modalOpen, setModalOpen] = useState(false);
+  const handleQuantityChange = (
+    productId: number,
+    action: "increase" | "decrease"
+  ) => {
+    setFormData((prevFormData) => {
+      const updatedProducts = prevFormData.selectedProducts
+        .map((product) =>
+          product.id === productId
+            ? {
+                ...product,
+                quantity:
+                  action === "increase"
+                    ? product.quantity + 1
+                    : product.quantity - 1,
+              }
+            : product
+        )
+        .filter((product) => product.quantity > 0); // Remove items with 0 quantity
+
+      return {
+        ...prevFormData,
+        selectedProducts: updatedProducts,
+      };
+    });
+  };
+
   return (
     <div className="flex-1 md:sticky md:top-8 md:self-start">
-      <h3 className="text-xl font-bold text-green-800 mb-6">Your Order</h3>
+      <h3 className="text-xl font-bold text-green-800 mb-1 md:mb-6">
+        Your Order
+      </h3>
 
-      <div className="p-4 md:p-6 mb-6">
-        <div className="flex items-center border-t-1 border-gray-400 pt-6 border-dashed mb-6">
-          <Image
-            width={300}
-            height={300}
-            src={selectedProduct.image}
-            alt={selectedProduct.name}
-            className="w-24 h-24 object-cover rounded-md mr-4"
-          />
-          <div>
-            <h4 className="font-bold text-lg">{selectedProduct.name}</h4>
-            <p className="text-gray-600">
-              <span className="text-sm font-extrabold mr-1">৳</span>
-              {selectedProduct.offerPrice.toFixed(2)}
-            </p>
+      <div className="px-4 py-0 md:p-6 mb-6">
+        {selectedProducts.map((product) => (
+          <div
+            key={product.id}
+            className="flex items-center border-t-1 border-gray-400 pt-3 md:pt-6 border-dashed mb-6"
+          >
+            <Image
+              width={300}
+              height={300}
+              src={product.image}
+              alt={product.name}
+              className="w-24 h-24 object-cover rounded-md mr-4"
+            />
+            <div>
+              <h4 className="font-bold text-lg">{product.name}</h4>
+              <p className="text-gray-600">
+                <span className="text-sm font-extrabold mr-1">৳</span>
+                {product.offerPrice.toFixed(2)}
+              </p>
+
+              {/* Quantity Buttons */}
+              <div className="flex items-center mt-2">
+                <button
+                  type="button"
+                  disabled={
+                    selectedProducts.length === 1 && product.quantity === 1
+                  }
+                  onClick={() => handleQuantityChange(product.id, "decrease")}
+                  className="px-2 py-1 bg-gray-200 rounded-md cursor-pointer"
+                >
+                  -
+                </button>
+                <span className="mx-4">{product.quantity}</span>
+                <button
+                  disabled={product.quantity === 5}
+                  type="button"
+                  onClick={() => handleQuantityChange(product.id, "increase")}
+                  className="px-2 py-1 bg-gray-200 rounded-md cursor-pointer"
+                >
+                  +
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
+        ))}
 
         <div className="border-t border-gray-400 border-dashed pt-4">
           <div className="flex justify-between mb-2">
@@ -68,7 +133,7 @@ const OrderDetails = ({
               Shipping:
             </span>
             <div className="flex justify-between items-center">
-              {selectedProduct.isFreeDelibery ? (
+              {selectedProducts.some((product) => product.isFreeDelibery) ? (
                 <span>ফ্রি ডেলিভারি</span>
               ) : (
                 <div className="flex flex-col space-y-1">
@@ -77,10 +142,8 @@ const OrderDetails = ({
                       type="radio"
                       name="shipping"
                       value="80"
-                      checked={
-                        !selectedProduct.isFreeDelibery && shipping === "80"
-                      }
-                      className="ml-3 scale-125 cursor-pointer" // Reduced size
+                      checked={shipping === "80"}
+                      className="ml-3 scale-125 cursor-pointer"
                       onChange={handleShippingChange}
                     />
                     <span>চট্টগ্রাম ভিতরে</span>
@@ -98,7 +161,7 @@ const OrderDetails = ({
                       className="ml-3 scale-125 cursor-pointer"
                       onChange={handleShippingChange}
                     />
-                    <span className="">চট্টগ্রাম বাইরে</span>
+                    <span>চট্টগ্রাম বাইরে</span>
                   </div>
                   <p className="text-lg ml-4">
                     <span className="text-base font-extrabold mr-1">৳</span>
@@ -119,32 +182,15 @@ const OrderDetails = ({
         </div>
       </div>
 
-      <div className="p-6 rounded-lg mb-6">
-        <h4 className="font-bold text-lg mb-4 flex items-center">
-          <Truck className="mr-2" />
-          ডেলিভারি তথ্য
-        </h4>
-        <ul className="space-y-2 text-gray-700">
-          <li className="flex items-center">
-            <CheckCircle size={16} className="text-green-500 mr-2" />
-            ক্যাশ অন ডেলিভারি উপলব্ধ
-          </li>
-          <li className="flex items-center">
-            <CheckCircle size={16} className="text-green-500 mr-2" />
-            ২-৩ কার্যদিবসের মধ্যে ডেলিভারি
-          </li>
-          <li className="flex items-center">
-            <CheckCircle size={16} className="text-green-500 mr-2" />
-            নিরাপদ ডেলিভারির জন্য সুরক্ষিত প্যাকেজিং
-          </li>
-        </ul>
-      </div>
       <motion.button
         type="submit"
-        disabled={loading || orderSuccess}
-        onClick={() => setModalOpen(true)}
-        className={`w-full py-4 text-xl cursor-pointer text-white font-bold rounded-lg transition duration-300 flex items-center justify-center overflow-hidden relative shadow-[0_4px_10px_#DE7200] opacity-100 ${
-          orderSuccess ? "bg-green-500" : "bg-green-800"
+        disabled={
+          loading || orderSuccess || formData.selectedProducts.length === 0
+        }
+        className={`w-full py-4 text-xl font-bold text-white rounded-lg transition duration-300 flex items-center justify-center overflow-hidden relative ${
+          loading || orderSuccess || formData.selectedProducts.length === 0
+            ? "bg-green-700 cursor-not-allowed opacity-50"
+            : "bg-green-800 hover:scale-105"
         }`}
         whileHover={
           !loading && !orderSuccess
@@ -187,15 +233,15 @@ const OrderDetails = ({
 
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
         <DialogContent>
-          {<Confetti className="w-full h-full" />}
+          <Confetti className="w-full h-full" />
           <DialogHeader>
             <DialogTitle className="text-center text-green-600">
               অর্ডার সফল!
             </DialogTitle>
           </DialogHeader>
-          <div className="flex flex-col items-center justify-center p3-6 relative">
+          <div className="flex flex-col items-center justify-center p-6 relative">
             <p className="text-gray-700 text-center">
-              “ধন্যবাদ 💐! আপনার অর্ডারটি নিশ্চিত করা হয়েছে। কিছুক্ষণের মধ্যেই
+              “ধন্যবাদ 💐! আপনার অর্ডারটি নিশ্চিত করা হয়েছে। কিছুক্ষণের মধ্যে
               আমাদের একজন প্রতিনিধি আপনার সাথে ফোনে যোগাযোগ করবেন।”
             </p>
             <button

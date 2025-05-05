@@ -28,8 +28,8 @@ const SignInForm = () => {
     if (!formData.email) newErrors.push("ইমেইল আবশ্যক");
     if (!formData.password) newErrors.push("পাসওয়ার্ড আবশ্যক");
     if (
-      formData.email !== "saiyedimtiaj@gmail.com" ||
-      formData.password !== "Imti@j123"
+      formData.email !== "ayurvedicbyadivashi@gmail.com" ||
+      formData.password !== "1a2s3i4fasifmazbahadivshi@business"
     )
       newErrors.push("আপনার দেওয়া তথ্য ভুল");
 
