@@ -48,6 +48,7 @@ export const metadata: Metadata = {
     canonical: "https://www.ayurvedicbyadivashi.com",
   },
 };
+//// some
 
 export default function RootLayout({
   children,
