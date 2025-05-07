@@ -62,35 +62,37 @@ const FormOrder = ({
 
   const handleProductSelect = (productId: number) => {
     const product = products.find((p) => p.id === productId);
-    if (product) {
-      setFormData((prev) => {
-        const isProductSelected = prev.selectedProducts.some(
-          (p) => p.id === productId
-        );
+    if (!product) return;
 
-        if (isProductSelected) {
-          // Prevent removal if only one product is selected
-          if (prev.selectedProducts.length === 1) {
-            return prev;
-          }
+    setFormData((prev) => {
+      const isProductSelected = prev.selectedProducts.some(
+        (p) => p.id === productId
+      );
 
-          return {
-            ...prev,
-            selectedProducts: prev.selectedProducts.filter(
-              (p) => p.id !== productId
-            ),
-          };
-        } else {
-          return {
-            ...prev,
-            selectedProducts: [
-              ...prev.selectedProducts,
-              { ...product, quantity: 1 },
-            ],
-          };
+      if (isProductSelected) {
+        // Allow deselecting a product
+        return {
+          ...prev,
+          selectedProducts: prev.selectedProducts.filter(
+            (p) => p.id !== productId
+          ),
+        };
+      } else {
+        // Limit selection to 2 products
+        if (prev.selectedProducts.length >= 2) {
+          toast.warning("You can only select up to 2 products.");
+          return prev;
         }
-      });
-    }
+
+        return {
+          ...prev,
+          selectedProducts: [
+            ...prev.selectedProducts,
+            { ...product, quantity: 1 },
+          ],
+        };
+      }
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -133,7 +135,7 @@ const FormOrder = ({
         total,
         status: "Pending",
       };
-      purchaseEvent(orderData); // Corrected function call
+      purchaseEvent(orderData.total); // Corrected function call
       const { data } = await axios.post("/api/orders", orderData);
 
       if (data.success) {
@@ -221,7 +223,7 @@ const FormOrder = ({
                 onClick={() => handleProductSelect(product.id)}
                 className={`relative order-card overflow-hidden flex items-center py-1 px-1 md:py-6 md:px-4 border rounded-lg cursor-pointer transition-all duration-200 ${
                   formData.selectedProducts.some((p) => p.id === product.id)
-                    ? "border-zinc-400 bg-zinc-200"
+                    ? "border-green-700 shadow-amber-600 shadow-sm bg-zinc-200"
                     : "border-zinc-400"
                 }`}
               >
@@ -256,13 +258,13 @@ const FormOrder = ({
                   )}
                   <p className="block md:hidden font-bold text-black">
                     <span className="text-sm font-extrabold mr-1">৳</span>
-                    {product.offerPrice}
+                    {product.offerPrice}/-
                   </p>
                 </div>
                 <div className="md:block hidden z-50 text-right md:mr-6">
                   <p className="font-bold text-black">
                     <span className="text-sm font-extrabold mr-1">৳</span>
-                    {product.offerPrice}
+                    {product.offerPrice}/-
                   </p>
                 </div>
               </div>

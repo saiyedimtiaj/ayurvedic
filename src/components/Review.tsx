@@ -33,8 +33,8 @@ const Review = () => {
   }, [nextImage, selectedImage]); // Re-run interval on image change to reset timer
 
   return (
-    <div className="container mx-auto px-2 -mt-2 md:px-4 mb-3 md:mb-10 text-center overflow-hidden">
-      <div className="py-0 md:py-3 px-3 max-w-[260px] md:max-w-[400px] text-green-700 mx-auto  border-2 border-green-700 rounded-2xl font-bold mb-3 md:mb-10 relative">
+    <div className="container mx-auto px-2 md:px-4 mb-5 md:mb-10 text-center overflow-hidden ">
+      <div className="py-0 md:py-3 px-3 max-w-[260px] md:max-w-[400px] text-green-700 mx-auto  border-2 border-green-700 rounded-2xl font-bold mb-5 md:mb-10 relative">
         <h1 className="text-2xl md:text-4xl">Customer Reviews</h1>
         <Image
           width={100}

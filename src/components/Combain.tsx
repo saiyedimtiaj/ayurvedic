@@ -14,7 +14,7 @@ import prod5 from "../assets/iu05.jpg";
 const products = [
   {
     id: 1,
-    name: "১৫০ মিলি আয়ুর্বেদিক রিলিফ অয়েল।",
+    name: "150ml ইন্ডিয়ান আয়ুর্বেদিক রিলিফ অয়েল।",
     price: 1250,
     image: prod1,
     isFreeDelibery: false,
@@ -23,7 +23,7 @@ const products = [
   },
   {
     id: 2,
-    name: "৩০০ মিলি আয়ুর্বেদিক রিলিফ অয়েল।",
+    name: "300ml ইন্ডিয়ান আয়ুর্বেদিক রিলিফ অয়েল।",
     price: 2500,
     image: prod2,
     isFreeDelibery: true,
@@ -33,7 +33,7 @@ const products = [
   },
   {
     id: 6,
-    name: "২০০ মিলি আয়ুর্বেদিক হেয়ার অয়েল ও ১৫০ মিলি আয়ুর্বেদিক রিলিফ অয়েলের সাথে ২০০ মিলি গ্রাম আয়ুর্বেদিক হেয়ার স্পা প‍্যাক ফ্রি।",
+    name: "200ml ইন্ডিয়ান আদিবাসী হেয়ার অয়েল ও 150ml আয়ুর্বেদিক রিলিফ অয়েলের সাথে 200gm আয়ুর্বেদিক হেয়ার স্পা প‍্যাক-ফ্রি।",
     price: 2875,
     image: prod5,
     isFreeDelibery: true,

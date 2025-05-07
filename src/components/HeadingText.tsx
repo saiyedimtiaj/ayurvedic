@@ -6,7 +6,8 @@ const HeadingText = () => {
   return (
     <div className="font-bold relative text-center mx-2 md:mx-auto px-3 md:px-5 border-green-600 border-2 pt-1 md:py-7 max-w-[900px] rounded-2xl mt-3 md:mt-14">
       <h1 className="text-[18px]  md:text-4xl ">
-        দীর্ঘস্থায়ী শরীরব্যথা থেকে মুক্তির বিশ্বস্ত প্রাচীন আয়ুর্বেদিক ফর্মুলা।
+        দীর্ঘস্থায়ী শরীরব্যথা থেকে মুক্তির বিশ্বস্ত সমাধান ইন্ডিয়ান আয়ুর্বেদিক
+        অয়েল।
       </h1>
       <Image
         width={100}

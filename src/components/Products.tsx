@@ -31,10 +31,10 @@ const Products = ({
   };
 
   return (
-    <section id="products" className="pb-5 md:pb-12 px-2 md:px-4 -mt-1">
+    <section id="products" className="pb-5 md:pb-12 px-2 md:px-4">
       <div className="max-w-7xl mx-auto">
-        <div className={`text-center mb-1 md:mb-16 `}>
-          <h2 className="text-2xl md:text-4xl font-bold text-green-700 mb-4">
+        <div className={`text-center mb-4 md:mb-16 `}>
+          <h2 className="text-2xl md:text-4xl font-bold text-green-700 mb-2">
             আমাদের আদিবাসী পণ্যসমূহ :
           </h2>
         </div>
@@ -86,7 +86,7 @@ const Products = ({
                         ৳
                       </span>
                       <span className="text-green-700">
-                        {product.offerPrice}
+                        {product.offerPrice}/-
                       </span>
                     </p>
                   </span>
@@ -137,14 +137,14 @@ const Products = ({
                 {products[2].tag}
               </span>
               <h3 className="text-lg mt-2 font-bold text-gray-900 mb-2">
-                ২০০ মিলি আয়ুর্বেদিক হেয়ার অয়েল ও
+                200ml ইন্ডিয়ান আদিবাসী হেয়ার অয়েল ও
                 <span className="text-[15px] ml-1">
-                  <span className="text-[17px]"> ১৫০ মিলি</span> আয়ুর্বেদিক
-                  রিলিফ অয়েলের সাথে
+                  <span className="text-[17px]"> 150ml</span> আয়ুর্বেদিক রিলিফ
+                  অয়েলের সাথে
                 </span>{" "}
                 <span className="text-[15px] ml-1">
-                  <span className="text-[17px]"> ২০০ গ্রাম </span>
-                  আয়ুর্বেদিক হেয়ার স্পা প‍্যাক ফ্রি।
+                  <span className="text-[17px]"> 200gm </span>
+                  আয়ুর্বেদিক হেয়ার স্পা প‍্যাক-ফ্রি।
                 </span>
               </h3>
               <div className="flex justify-between items-center">
@@ -161,7 +161,7 @@ const Products = ({
                     <span className="text-xl text-black font-extrabold">৳</span>
                     <span className="text-green-700">
                       {" "}
-                      {products[2].offerPrice}
+                      {products[2].offerPrice}/-
                     </span>
                   </p>
                 </span>

@@ -17,31 +17,31 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AyurvedicbyAdivashi",
+  title: "Ayurvedic By Adivashi",
   icons: "./favicon.ico",
   description:
-    "আমাদের সুপার সেল কোম্ব প্যাকেজ: ২০০ মিলি আয়ুর্বেদিক হেয়ার অয়েল ও ১৫০ মিলি আয়ুর্বেদিক রিলিফ অয়েলের সাথে ২০০ গ্রাম আয়ুর্বেদিক হেয়ার স্পা প‍্যাক ফ্রি।",
+    "দীর্ঘস্থায়ী শরীরব্যথা থেকে মুক্তির বিশ্বস্ত সমাধান ইন্ডিয়ান ফর্মুলায় তৈরি আয়ুর্বেদিক রিলিফ অয়েল। যা SUMMER-OFFER এ পেয়ে যাচ্ছেন, 150ml রিলিফ অয়েল মাত্র ৮৯০/- টাকায় এবং 300ml আয়ুর্বেদিক রিলিফ অয়েল মাত্র ১৫৪৯/-টাকায়।",
   openGraph: {
     url: "https://www.ayurvedicbyadivashi.com/",
     type: "website",
-    title: "AyurvedicbyAdivashi",
+    title: "Ayurvedic By Adivashi",
     description:
-      "আমাদের সুপার সেল কোম্ব প্যাকেজ: ২০০ মিলি আয়ুর্বেদিক হেয়ার অয়েল ও ১৫০ মিলি আয়ুর্বেদিক রিলিফ অয়েলের সাথে ২০০ গ্রাম আয়ুর্বেদিক হেয়ার স্পা প‍্যাক ফ্রি।",
+      "দীর্ঘস্থায়ী শরীরব্যথা থেকে মুক্তির বিশ্বস্ত সমাধান ইন্ডিয়ান ফর্মুলায় তৈরি আয়ুর্বেদিক রিলিফ অয়েল। যা SUMMER-OFFER এ পেয়ে যাচ্ছেন, 150ml রিলিফ অয়েল মাত্র ৮৯০/- টাকায় এবং 300ml আয়ুর্বেদিক রিলিফ অয়েল মাত্র ১৫৪৯/-টাকায়।",
     images: [
       {
         url: "https://www.ayurvedicbyadivashi.com/opengraph-image.png",
         width: 1200,
         height: 1200,
-        alt: "AyurvedicbyAdivashi",
+        alt: "Ayurvedic By Adivashi",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
     site: "@yourtwitterhandle",
-    title: "AyurvedicbyAdivashi",
+    title: "Ayurvedic By Adivashi",
     description:
-      "আমাদের সুপার সেল কোম্ব প্যাকেজ: ২০০ মিলি আয়ুর্বেদিক হেয়ার অয়েল ও ১৫০ মিলি আয়ুর্বেদিক রিলিফ অয়েলের সাথে ২০০ গ্রাম আয়ুর্বেদিক হেয়ার স্পা প‍্যাক ফ্রি।",
+      "দীর্ঘস্থায়ী শরীরব্যথা থেকে মুক্তির বিশ্বস্ত সমাধান ইন্ডিয়ান ফর্মুলায় তৈরি আয়ুর্বেদিক রিলিফ অয়েল। যা SUMMER-OFFER এ পেয়ে যাচ্ছেন, 150ml রিলিফ অয়েল মাত্র ৮৯০/- টাকায় এবং 300ml আয়ুর্বেদিক রিলিফ অয়েল মাত্র ১৫৪৯/-টাকায়।",
     images: ["https://www.ayurvedicbyadivashi.com/opengraph-image.png"],
   },
   alternates: {
@@ -57,28 +57,6 @@ export default function RootLayout({
   return (
     <html lang="bn">
       <head>
-        <title>AyurvedicbyAdivashi</title>
-        <meta charSet="UTF-8" />
-        <link rel="canonical" href="https://www.ayurvedicbyadivashi.com/" />
-        <link
-          rel="icon"
-          href="https://www.ayurvedicbyadivashi.com/opengraph-image.png"
-        />
-        <meta
-          property="og:image"
-          content="https://www.ayurvedicbyadivashi.com/opengraph-image.png"
-        />
-        <meta
-          property="og:image:alt"
-          content="https://www.ayurvedicbyadivashi.com/opengraph-image.png"
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="title" content="AyurvedicbyAdivashi" />
-        <meta
-          name="description"
-          content="শরীরের যেকোনো ব্যথা বা চুলের যত্নে বিশ্বস্ত আয়ুর্বেদিক সমাধান । আমাদের সুপার সেল কোম্ব প্যাকেজ: ২০০ মিলি আয়ুর্বেদিক হেয়ার অয়েল ও ১৫০ মিলি আয়ুর্বেদিক রিলিফ অয়েলের সাথে ২০০ গ্রাম আয়ুর্বেদিক হেয়ার স্পা প‍্যাক ফ্রি।"
-        />
-
         {/* Google tag (gtag.js) */}
 
         <Script
