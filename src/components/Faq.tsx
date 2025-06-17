@@ -1,219 +1,38 @@
-"use client";
+import React from "react";
+import { FaCheckCircle } from "react-icons/fa";
 
-import React, { createContext, useContext, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { FaCaretDown } from "react-icons/fa";
-import overlay1 from "../assets/website asset FINAL-02.png";
-import overlay2 from "../assets/website asset FINAL-01.png";
-import Image from "next/image";
-import "aos/dist/aos.css";
-
-interface AccordionContextProps {
-  isActive: boolean;
-  index: number;
-  onChangeIndex: (index: number) => void;
-}
-
-const AccordionContext = createContext<AccordionContextProps | null>(null);
-const useAccordion = () => {
-  const context = useContext(AccordionContext);
-  if (!context) {
-    throw new Error("Accordion components must be used within an <Accordion>");
-  }
-  return context;
-};
-
-interface AccordionProps {
-  children: React.ReactNode;
-  multiple?: boolean;
-  defaultIndex?: number;
-}
-
-const Accordion: React.FC<AccordionProps> = ({
-  children,
-  multiple = false,
-  defaultIndex = -1,
-}) => {
-  const [activeIndex, setActiveIndex] = useState<number | number[]>(
-    multiple ? [defaultIndex] : defaultIndex
-  );
-
-  function onChangeIndex(index: number) {
-    setActiveIndex((currentActiveIndex) => {
-      if (!multiple) {
-        return currentActiveIndex === index ? -1 : index;
-      }
-      if (
-        Array.isArray(currentActiveIndex) &&
-        currentActiveIndex.includes(index)
-      ) {
-        return currentActiveIndex.filter((i) => i !== index);
-      }
-      return Array.isArray(currentActiveIndex)
-        ? [...currentActiveIndex, index]
-        : [index];
-    });
-  }
-
-  return (
-    <>
-      {React.Children.map(children, (child, index) => {
-        const isActive = Array.isArray(activeIndex)
-          ? activeIndex.includes(index)
-          : activeIndex === index;
-        return (
-          <AccordionContext.Provider value={{ isActive, index, onChangeIndex }}>
-            {child}
-          </AccordionContext.Provider>
-        );
-      })}
-    </>
-  );
-};
-
-interface AccordionItemProps {
-  children: React.ReactNode;
-}
-const AccordionItem: React.FC<AccordionItemProps> = ({ children }) => {
-  return (
-    <div className="overflow-hidden text-white border-b border-white">
-      {children}
-    </div>
-  );
-};
-
-interface AccordionHeaderProps {
-  children: React.ReactNode;
-}
-const AccordionHeader: React.FC<AccordionHeaderProps> = ({ children }) => {
-  const { isActive, index, onChangeIndex } = useAccordion();
-
-  return (
-    <motion.div
-      className="cursor-pointer gap-1.5 md:gap-2 py-3 flex items-start px-3 font-semibold text-[14px] md:text-xl transition-colors duration-200 text-white"
-      onClick={() => onChangeIndex(index)}
-    >
-      <motion.span
-        animate={{ rotate: isActive ? 180 : 270 }}
-        transition={{ duration: 0.3 }}
-        className="text-lg"
-      >
-        <FaCaretDown size={23} />
-      </motion.span>
-      <span className="">{children}</span>
-    </motion.div>
-  );
-};
-
-interface AccordionPanelProps {
-  children: React.ReactNode;
-}
-const AccordionPanel: React.FC<AccordionPanelProps> = ({ children }) => {
-  const { isActive } = useAccordion();
-
-  return (
-    <AnimatePresence initial={false}>
-      {isActive && (
-        <motion.div
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ height: "auto", opacity: 1 }}
-          exit={{ height: 0, opacity: 0 }}
-          transition={{ type: "spring", duration: 0.4, bounce: 0 }}
-        >
-          <div className="p-3 md:p-4 text-xs md:text-base">{children}</div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-};
+const data = [
+  "ব্যাকপেইন (কোমর ব্যথা)",
+  "হাড় ক্ষয়জনিত ব্যথা",
+  "গেটে বাত বা গাউট এর ব্যথা",
+  "পিঠ, ঘাড় বা মাথা ব্যথা",
+  "বাত্ব-ব্যথা এবং রগে টান লাগা",
+  "মাংসপেশি কামড়ানো, চিলিক মেরে উঠা",
+  "শরীরে যেকোনো জয়েন্টে ব্যথা",
+];
 
 const Faq = () => {
   return (
-    <section className="pb-3 md:pb-8 pt-2">
-      <div className="mx-auto bg-[#008036] pt-4 pb-5 relative">
-        <Image
-          src={overlay1}
-          alt="banner"
-          width={1000}
-          height={400}
-          className="w-full h-full absolute bottom-0 z-10 left-0"
-        />
-        <Image
-          src={overlay2}
-          alt="banner"
-          width={1000}
-          height={400}
-          className="w-full h-full absolute top-0 z-10 left-0"
-        />
-        <div className="text-center mb-0">
-          <h2 className="text-2xl md:text-4xl font-bold text-white">
-            সাধারন জিজ্ঞাসা
-          </h2>
-        </div>
+    <div className="container px-2 md:mx-auto pt-4 pb-6">
+      <h2 className="text-xl md:text-4xl font-bold text-center text-white bg-green-700 py-2 md:py-4 px-2 rounded-md">
+        রিলিফ অয়েলের উপকারিতা
+      </h2>
 
-        <div className="max-w-4xl mx-auto px-4 relative z-20">
-          <Accordion>
-            <AccordionItem>
-              <AccordionHeader>
-                ইন্ডিয়ান আয়ুর্বেদিক রিলিফ অয়েল কি বাত্ব-ব‍্যথার স্থায়ী
-                সমাধান?
-              </AccordionHeader>
-              <AccordionPanel>
-                ইন্ডিয়ান আয়ুর্বেদিক রিলিফ অয়েল প্রাচীন আয়ুর্বেদিক ফর্মুলায়
-                তৈরি, এক কথায় বাত-ব্যথায় কার্যকরী এই পাহাড়ি আয়ুর্বেদিক রিলিফ
-                অয়েল। যা ইন্সট্যান্ট রিলিফ এর পাশাপাশি ১৪ দিনের মধ্যে স্থায়ী
-                সমাধান দিবে। Guaranty সহকারে। -ইনশাআল্লাহ। এছাড়া স্নায়ুজনিত
-                ব্যথা ও জয়েন্টের অস্বস্তি উপশমে অত্যন্ত কার্যকর। নিয়মিত
-                ব্যবহারে এটি ব্যথার মূল কারণের উপর কাজ করে এবং দীর্ঘমেয়াদে
-                স্বস্তি এনে দেয়। তাই কৃত্রিম ওষুধের পরিবর্তে এটি বেছে নেওয়া
-                একটি বুদ্ধিমানের সিদ্ধান্ত হতে পারে।
-              </AccordionPanel>
-            </AccordionItem>
-            <AccordionItem>
-              <AccordionHeader>
-                আমার শরীরে বিভিন্ন অংশে প্রচুর ব‍্যথা, রিলিফ ওয়েলটি কি কি ব‍্যথা
-                দূর করবে ?
-              </AccordionHeader>
-              <AccordionPanel>
-                আমাদের আয়ুর্বেদিক রিলিফ অয়েলটির কার্যকারিতাঃ
-                <br />
-                💊মাংশ পেশি চাবায় কামড়ায়!
-                <br />
-                💊রগে টান লাগে!
-                <br />
-                💊জালাপোড়া করে, ঝিনঝিন করে!
-                <br />
-                💊মাংসপেশিতে খিচ ধরা!
-                <br />
-                💊ঘাড়ের ব্যথা, রাতে ব্যথা বেড়ে যায়!
-                <br />
-                💊হাত-পায়ের জয়েন্টে ব্যথা, হাত-পা অবোশ হয়ে থাকে!
-                <br />
-                💊কোমরের ব্যথা, উঠলে বসা যায় না, বসলে উঠা যায় না!
-                <br />
-                💊হাটু ব্যথা, হাড়ক্ষয় বা কার্টিলেজ জনিত সমস্যার কারনে ব্যথা!
-                <br />
-                💊পায়ের তালুতে ব্যথা, ভাঙ্গা ব‍্যথা, মুছকানো, এক কথায় সকল ব্যথায়
-                কার্যকরী পাহাড়ি আয়ুর্বেদিক এই রিলিফ অয়েল। যা ইন্সট্যান্ট রিলিফ
-                এর পাশাপাশি ১৪ দিনের মধ্যে স্থায়ী সমাধান দিবে। Guaranty সহকারে।
-                -ইনশাআল্লাহ।
-              </AccordionPanel>
-            </AccordionItem>
-            <AccordionItem>
-              <AccordionHeader>
-                ব‍্যথার তৈলটি কিভাবে ব‍্যবহার করব?
-              </AccordionHeader>
-              <AccordionPanel>
-                🟢ব্যথার স্থানে ৫-৬ ফোটা তেল নিয়ে ৫ মিনিট মালিশ করতে হবে ।{" "}
-                <br /> 🟢ফলাফল পেতে প্রথম ৭ দিন, দিনে ৩ বার এবং পরের ৭
-                দিন,কমপক্ষে দিনে ২ বার মালিশ করতে হবে। এই নিয়ম পালন করলে
-                ইনশাআল্লাহ ভালো ফলাফল পাবেন।
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
+      <div className="mt-4 space-y-3 md:ml-6">
+        {data.map((text, index) => (
+          <p
+            key={index}
+            className="text-base md:text-2xl flex items-center gap-2 font-semibold"
+          >
+            <FaCheckCircle className="text-green-700" /> {text}
+          </p>
+        ))}
       </div>
-    </section>
+
+      <h4 className="text-xl md:text-3xl font-bold text-center mt-6">
+        সহ সকল ব্যথা স্থায়ীভাবে দূর করতে পরীক্ষিত সমাধান।
+      </h4>
+    </div>
   );
 };
 

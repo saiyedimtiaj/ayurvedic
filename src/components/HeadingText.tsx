@@ -14,14 +14,14 @@ const HeadingText = () => {
         height={100}
         src={leepImg}
         alt="hgfnm"
-        className="md:w-16 h-7 w-7 opacity-40 md:opacity-100 md:h-16 absolute left-0 -bottom-0 rotate-[12deg] -z-20"
+        className="md:w-16 h-7 w-7 opacity-50 md:opacity-100 md:h-16 absolute left-0 -bottom-0 rotate-[12deg] -z-20"
       />
       <Image
         width={100}
         height={100}
         src={leepImg}
         alt="hgfnm"
-        className="md:w-16 h-6 w-6 opacity-40 md:opacity-100 md:h-16 absolute right-0 top-0 -rotate-[170deg] -z-20"
+        className="md:w-16 h-6 w-6 opacity-50 md:opacity-100 md:h-16 absolute right-0 top-0 -rotate-[170deg] -z-20"
       />
     </div>
   );

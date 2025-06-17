@@ -7,12 +7,9 @@ import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import Image from "next/image";
 import logo from "../assets/ADIVASHI-LOGOiu-01.png";
-import banner1 from "../assets/website cover design 02-04.jpg";
-import banner2 from "../assets/website cover design 02-01.jpg";
 import banner3 from "../assets/website cover design 02-06.png";
 import banner4 from "../assets/website cover design 02-05.jpg";
 import banner5 from "../assets/website cover design 02-02.jpg";
-import banner6 from "../assets/website cover design 02-03.jpg";
 import "aos/dist/aos.css";
 import Link from "next/link";
 
@@ -58,7 +55,7 @@ export default function Hero() {
               modules={[Autoplay, Pagination, Navigation]}
               className="mySwiper"
             >
-              {[banner1, banner2, banner3, banner4, banner5, banner6].map(
+              {[banner4, banner5, banner3, banner4, banner5, banner3].map(
                 (banner, index) => (
                   <SwiperSlide key={index}>
                     <Image
