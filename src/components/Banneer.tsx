@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 const Banneer = () => {
-  const DURATION = 21300 * 1000; // 5 hours 55 minutes in milliseconds
+  const DURATION = 3 * 60 * 60 * 1000; // 5 hours 55 minutes in milliseconds
   const [timeLeft, setTimeLeft] = useState(0);
 
   useEffect(() => {

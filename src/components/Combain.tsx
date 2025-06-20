@@ -6,7 +6,6 @@ import { TFormData } from "@/types";
 import Review from "./Review";
 import prod2 from "../assets/iu01.jpg";
 import prod1 from "../assets/iu02.jpg";
-import prod5 from "../assets/iu05.jpg";
 import banner5 from "../assets/banner69.jpg";
 import Banneer from "./Banneer";
 import ActionButton from "./ActionButtons";
@@ -31,16 +30,6 @@ const products = [
     isHotSales: "HOT Combo",
     offerPrice: 1549,
     tag: "ফুল কোর্স",
-  },
-  {
-    id: 6,
-    name: "200ml ইন্ডিয়ান আদিবাসী হেয়ার অয়েল ও 150ml আয়ুর্বেদিক রিলিফ অয়েলের সাথে 200gm আয়ুর্বেদিক হেয়ার স্পা প‍্যাক-ফ্রি।",
-    price: 2875,
-    image: prod5,
-    isFreeDelibery: true,
-    isHotSales: "FAMILY Combo",
-    offerPrice: 1649,
-    tag: "সুপার কোর্স",
   },
 ];
 
@@ -75,9 +64,9 @@ const Combain = () => {
           className="w-full h-full rounded-2xl shadow-md shadow-green-500 p-2"
         />
       </div>
-      <h2 className="text-[18px] -mb-3 md:text-4xl mt-2 py-2 md:py-4 px-2 rounded-md text-center text-green-700 font-bold ">
-        ১৫ দিন নিয়মিত দিনে ২ বার এই তেল ব‍্যবহার করলে ইনশাআল্লাহ ব‍্যথা
-        স্থায়ীভাবে দূর হবে।
+      <h2 className="text-[18px] -mb-1 md:text-4xl mt-4 py-2 md:py-4 px-2 rounded-md text-center text-green-700 font-bold ">
+        <span className="text-yellow-400">মাত্র</span> ১৫ দিন নিয়মিত দিনে ২ বার
+        এই তেল ব‍্যবহার করলে ইনশাআল্লাহ ব‍্যথা স্থায়ীভাবে দূর হবে।
       </h2>
       <ActionButton />
       <Review />

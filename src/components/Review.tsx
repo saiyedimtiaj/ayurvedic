@@ -74,7 +74,7 @@ const Review = () => {
   }
 
   return (
-    <div className="container mx-auto px-2 md:px-4 mb-5 md:mb-10 text-center overflow-hidden">
+    <div className="container mx-auto mt-3 px-2 md:px-4 mb-5 md:mb-10 text-center overflow-hidden">
       <div className="py-0 md:py-3 px-3 max-w-[260px] md:max-w-[400px] text-green-700 mx-auto border-2 border-green-700 rounded-2xl font-bold mb-5 md:mb-10 relative">
         <h1 className="text-[18px] py-1 md:text-4xl">আমাদের কাস্টমার রিভিউ</h1>
         <Image

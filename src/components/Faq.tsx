@@ -13,7 +13,7 @@ const data = [
 
 const Faq = () => {
   return (
-    <div className="container px-2 md:mx-auto pt-4 pb-6">
+    <div className="container px-2 md:mx-auto pt-4 pb-2">
       <h2 className="text-xl md:text-4xl font-bold text-center text-white bg-green-700 py-2 md:py-4 px-2 rounded-md">
         রিলিফ অয়েলের উপকারিতা
       </h2>

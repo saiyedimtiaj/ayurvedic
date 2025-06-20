@@ -5,7 +5,7 @@ import { FaPhoneAlt, FaTimes, FaWhatsapp } from "react-icons/fa";
 import { FaMessage } from "react-icons/fa6";
 
 export default function AnimatedSocialIcon() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const phoneNumber = "+8801615117126";
   const whatsappNumber = "+8801615117126";
